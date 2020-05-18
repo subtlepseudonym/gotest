@@ -22,7 +22,8 @@ import (
 
 var (
 	success = color.FgGreen
-	fail = color.FgHiRed
+	skipped = color.FgYellow
+	fail    = color.FgHiRed
 )
 
 const paletteEnv = "GOTEST_PALETTE"
@@ -86,6 +87,10 @@ func parse(line string) {
 		fallthrough
 	case strings.HasPrefix(trimmed, "PASS"):
 		color.Set(success)
+
+	// skipped
+	case strings.HasPrefix(trimmed, "--- SKIP"):
+		color.Set(skipped)
 
 	// failure
 	case strings.HasPrefix(trimmed, "--- FAIL"):
